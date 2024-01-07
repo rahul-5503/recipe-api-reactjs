@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import { createRoot } from 'react-dom/client';
 import './App.css';
 import { FaSearch,FaArrowUp,  FaArrowDown   } from 'react-icons/fa';
 
+
 function App() {
+  console.log(process.env.REACT_APP_API_KEY);
   const [endPoint, setEndPoint] = useState('');
   const [container, setContainer] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState({});
@@ -38,8 +41,8 @@ function App() {
     fetch(`https://food-recipes-with-images.p.rapidapi.com/?q=+${endPoint}`, {
       method: 'GET',
       headers: {
-        'X-RapidAPI-Key': '2d2203cfecmsh100d5348edf46f9p1fa3a2jsn4e0b6e0c471b',
-        'X-RapidAPI-Host': 'food-recipes-with-images.p.rapidapi.com'
+        'X-RapidAPI-Key': process.env.REACT_APP_API_KEY,
+        'X-RapidAPI-Host': process.env.REACT_APP_API_HOST
       }
     })
       .then(response => response.json())
@@ -91,6 +94,12 @@ function App() {
         </form>
     </div>
     </header>
+    <div>
+      <button className="scroll-to-bottom-btn" onClick={scrollToBottom}>
+        <FaArrowDown />
+      </button>
+      </div>
+      
     {container && container.length > 0 ? (
   <div className="grid md:grid-cols-4 gap-4 justify-items-center mt-8 p-3">
     {container.map((item, index) => (
@@ -109,16 +118,7 @@ function App() {
   <div>No data available</div>
 )}
 
-      <div>
-      <button className="scroll-to-bottom-btn" onClick={scrollToBottom}>
-        <FaArrowDown />
-      </button>
-      </div>
-      {isVisible && (
-        <button className="scroll-to-top-btn" onClick={scrollToTop}>
-          <FaArrowUp />
-        </button>
-      )}
+      
       {/* Display selected recipe details */}
       {selectedRecipe && (
         <div className="mt-8 p-4 border border-gray-300 rounded-md">
