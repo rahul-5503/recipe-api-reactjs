@@ -5,7 +5,6 @@ import { FaSearch,FaArrowUp,  FaArrowDown   } from 'react-icons/fa';
 
 
 function App() {
-  console.log(process.env.REACT_APP_API_KEY);
   const [endPoint, setEndPoint] = useState('');
   const [container, setContainer] = useState([]);
   const [selectedRecipe, setSelectedRecipe] = useState({});
